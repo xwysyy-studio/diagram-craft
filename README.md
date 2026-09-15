@@ -6,9 +6,15 @@
 
 可用于 Codex 和 Claude Code。核心工作流不依赖生图、浏览器自动化、MCP 或在线渲染服务；Python 标准库脚本提供可选的源文件检查。
 
-![版本化索引发布示例](assets/mechanism.png)
+字体沿用 draw.io 默认设置，不额外指定字体家族或下载字体；字号、粗细和间距按阅读需要调整。
 
-[编辑这个示例](assets/mechanism.drawio) · [查看 SVG](assets/mechanism.svg)
+![订单履约：支付、超时与异步补偿](assets/order-fulfillment.png)
+
+[编辑复杂示例](assets/order-fulfillment.drawio) · [查看 SVG](assets/order-fulfillment.svg) · [完整方案说明](assets/order-fulfillment.md)
+
+这个虚构方案包含同步下单、支付与超时竞争、库存补偿、Outbox 消息发布、重复消息、局部失败重试、迟到支付退款和人工处理，用于展示多条关联路径的组织方式。它不代表真实公司的实现或性能结论。
+
+复杂示例按约 1200 像素的文档全宽设计；仓库页面会缩小预览，点击图片可查看原尺寸，也可以打开 SVG 或 `.drawio` 检查局部。
 
 ## 它如何画图
 
@@ -113,6 +119,12 @@ python3 scripts/drawio.py unpack compressed.drawio readable.drawio
 ## 更多原生示例
 
 示例均为虚构的技术说明，展示布局方法，不代表真实系统实现或性能结论。
+
+### 系统视图与局部机制
+
+![版本化索引发布示例](assets/mechanism.png)
+
+[可编辑源文件](assets/mechanism.drawio) · [SVG](assets/mechanism.svg)
 
 ### 主流程、判断与修正回路
 

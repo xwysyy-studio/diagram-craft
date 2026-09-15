@@ -34,7 +34,7 @@ unnecessary nested layout markup and unrelated inline overrides.
 ```xml
 <mxCell id="indexer" value="Build index&#xa;Validate candidate version"
   vertex="1" parent="1"
-  style="rounded=1;arcSize=8;whiteSpace=wrap;html=0;fillColor=#EAF5F3;strokeColor=#147D78;strokeWidth=1.5;fontColor=#243247;fontFamily=Helvetica;fontSize=18;spacing=12;">
+  style="rounded=1;arcSize=8;whiteSpace=wrap;html=0;fillColor=#EAF5F3;strokeColor=#147D78;strokeWidth=1.5;fontColor=#243247;fontSize=18;spacing=12;">
   <mxGeometry x="360" y="180" width="240" height="88" as="geometry"/>
 </mxCell>
 ```
@@ -66,11 +66,11 @@ annotations out of connector corridors.
 
 ```xml
 <mxCell id="publisher" value="Publishing" vertex="1" parent="1"
-  style="swimlane;horizontal=1;startSize=48;container=1;collapsible=0;rounded=1;arcSize=8;fillColor=#F5F7FA;swimlaneFillColor=#F5F7FA;strokeColor=#D8E0E8;fontFamily=Helvetica;fontSize=20;fontColor=#243247;align=left;spacingLeft=20;">
+  style="swimlane;horizontal=1;startSize=48;container=1;collapsible=0;rounded=1;arcSize=8;fillColor=#F5F7FA;swimlaneFillColor=#F5F7FA;strokeColor=#D8E0E8;fontSize=20;fontColor=#243247;align=left;spacingLeft=20;">
   <mxGeometry x="40" y="120" width="440" height="220" as="geometry"/>
 </mxCell>
 <mxCell id="publish" value="Switch active version" vertex="1" parent="publisher"
-  style="rounded=1;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#147D78;fontFamily=Helvetica;fontSize=18;fontColor=#243247;spacing=12;">
+  style="rounded=1;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#147D78;fontSize=18;fontColor=#243247;spacing=12;">
   <mxGeometry x="24" y="80" width="240" height="72" as="geometry"/>
 </mxCell>
 ```
@@ -86,7 +86,7 @@ cells is not automatically an editable group.
 ```xml
 <mxCell id="build-to-publish" value="validation passed" edge="1" parent="1"
   source="build" target="publish"
-  style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
+  style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontSize=15;fontColor=#526175;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;entryX=0;entryY=0.5;">
   <mxGeometry relative="1" as="geometry">
     <mxPoint x="0" y="-12" as="offset"/>
   </mxGeometry>

@@ -40,6 +40,9 @@ closest example as a worked composition, not as a compulsory topology:
 - `mechanism.drawio`: a system overview with an expanded publishing mechanism.
 - `flow.drawio`: a main path, a decision, and an explicit failure outcome.
 - `comparison.drawio`: two approaches compared on the same operation.
+- `order-fulfillment.drawio`: interacting payment, timeout, inventory, delivery,
+  and compensation paths. Read `assets/order-fulfillment.md` with this example
+  when checking how its conditions and state transitions are represented.
 
 ## Understand what the figure must explain
 
@@ -78,9 +81,12 @@ nodes first and improvising edges afterward. Keep the main explanation visually
 continuous; place secondary branches where they can be followed without weaving
 through unrelated modules.
 
-Use readable labels, restrained color roles, and purposeful whitespace. When a
-label will not fit, change wrapping, box size, or composition before making the
-type smaller. Keep important conditions close to the element they qualify.
+Use readable labels, restrained color roles, and purposeful whitespace. For new
+figures, use draw.io's default font family without an explicit
+`fontFamily`, CSS `font-family`, or font-face override unless the user requests
+one. Adjust size, weight, and spacing for hierarchy; do not download fonts.
+When a label will not fit, change wrapping, box size, or composition before making
+the type smaller. Keep important conditions close to the element they qualify.
 When a mechanism depends on changing state, make that state visible where it
 clarifies the explanation. Place consequential outcomes next to their decision
 or action, with an explicit relationship when proximity alone is ambiguous.

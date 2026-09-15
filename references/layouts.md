@@ -120,7 +120,9 @@ route = source_port, (corridor_x, source_port.y),
 ```
 
 Choose corridor coordinates outside unrelated node rectangles with room for
-labels. Store waypoint coordinates relative to the edge's parent. If endpoints
+labels. When a route crosses a panel boundary, choose a clear entry point that
+also avoids the panel's heading text. Store waypoint coordinates relative to the
+edge's parent. If endpoints
 belong to different groups, parenting the edge to the common containing layer
 often makes these coordinates easier to reason about. Avoid placing a waypoint
 at each pixel or adding redundant points along a straight segment.

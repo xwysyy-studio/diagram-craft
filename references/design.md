@@ -51,10 +51,11 @@ Suggested starting roles at roughly 1000 units of display width:
 | Explanatory text | 16–18 | Plain language; enough space for natural wrapping |
 | Connector or auxiliary label | 14–16 | Readable contrast; keep essential conditions at body size when needed |
 
-These are starting values, not universal thresholds. Use installed sans-serif
-fonts with CJK support or system fallback, for example Helvetica on macOS with
-the system CJK fallback. Avoid mandatory font downloads. Technical abbreviations
-can remain in English; do not force whole labels into monospace.
+These are starting values, not universal thresholds. Use draw.io's default font
+family for new figures and omit explicit font-family overrides unless the user
+requests a different family. Do not download fonts. Size, weight, and spacing
+provide the hierarchy. Technical abbreviations can remain in English; do not
+force whole labels into monospace.
 
 Give text real room. Estimate CJK glyphs near one font-size in width and typical
 Latin glyphs around half a font-size, with line height around 1.3–1.4 times font
