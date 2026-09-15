@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram id="mechanism" name="mechanism">
+    <mxGraphModel grid="1" gridSize="8" page="1" pageScale="1" pageWidth="1000" pageHeight="744" background="#FFFFFF" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="版本化索引发布：构建与查询分离" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontFamily=Helvetica;fontColor=#243247;align=left;verticalAlign=middle;spacing=0;fontSize=28;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="32" y="24" width="936" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="候选版本校验通过后才切换活动版本指针；校验失败时当前版本与指针保持不变。" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontFamily=Helvetica;fontColor=#526175;align=left;verticalAlign=middle;spacing=0;fontSize=17;" vertex="1" parent="1">
+          <mxGeometry x="32" y="70" width="936" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="system" value="系统视图" style="swimlane;horizontal=1;startSize=48;container=1;collapsible=0;rounded=1;arcSize=6;fillColor=#F5F7FA;swimlaneFillColor=#F5F7FA;strokeColor=#D8E0E8;strokeWidth=1;fontFamily=Helvetica;fontSize=20;fontStyle=1;fontColor=#243247;align=left;spacingLeft=20;html=1;" vertex="1" parent="1">
+          <mxGeometry x="32" y="120" width="936" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="request" value="查询请求" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="system">
+          <mxGeometry x="24" y="72" width="136" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="query" value="&lt;b&gt;查询服务&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot; color=&quot;#526175&quot;&gt;逐请求固定活动版本&lt;br&gt;读取该版本后返回检索结果&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="system">
+          <mxGeometry x="216" y="72" width="256" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="documents" value="文档更新" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="system">
+          <mxGeometry x="24" y="180" width="136" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="publisher" value="&lt;b&gt;版本发布器&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot; color=&quot;#526175&quot;&gt;构建候选版本，校验通过后切换指针&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EAF5F3;strokeColor=#147D78;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="system">
+          <mxGeometry x="216" y="180" width="256" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="store" value="版本化索引库" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;container=1;collapsible=0;fillColor=#FFFFFF;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontStyle=1;fontColor=#243247;align=left;verticalAlign=top;spacingLeft=16;spacingTop=6;" vertex="1" parent="system">
+          <mxGeometry x="600" y="56" width="312" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="slot-current" value="当前版本" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EAF5F3;strokeColor=#147D78;strokeWidth=1.5;fontFamily=Helvetica;fontSize=16;fontColor=#243247;align=center;verticalAlign=middle;spacing=4;spacingLeft=10;spacingRight=10;" vertex="1" parent="store">
+          <mxGeometry x="152" y="32" width="144" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="slot-candidate" value="候选版本" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F5F7FA;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=16;fontColor=#243247;align=center;verticalAlign=middle;spacing=4;spacingLeft=10;spacingRight=10;dashed=1;dashPattern=6 4;" vertex="1" parent="store">
+          <mxGeometry x="152" y="140" width="144" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="pointer" value="活动版本指针" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontFamily=Helvetica;fontColor=#147D78;align=right;verticalAlign=middle;spacing=0;fontSize=14;fontStyle=1;spacingRight=2;" vertex="1" parent="store">
+          <mxGeometry x="12" y="32" width="100" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="pointer-current" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#147D78;strokeWidth=2;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="store" source="pointer" target="slot-current">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="request-query" value="请求" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="system" source="request" target="query">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="query-pointer" value="读取活动版本" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="system" source="query" target="pointer">
+          <mxGeometry relative="1" as="geometry" x="-0.09">
+            <mxPoint x="0" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="documents-publisher" value="触发" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="system" source="documents" target="publisher">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="publisher-candidate" value="写入候选版本" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="system" source="publisher" target="slot-candidate">
+          <mxGeometry relative="1" as="geometry" x="-0.54">
+            <mxPoint x="0" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="detail" value="版本发布器内部" style="swimlane;horizontal=1;startSize=48;container=1;collapsible=0;rounded=1;arcSize=6;fillColor=#F5F7FA;swimlaneFillColor=#F5F7FA;strokeColor=#D8E0E8;strokeWidth=1;fontFamily=Helvetica;fontSize=20;fontStyle=1;fontColor=#243247;align=left;spacingLeft=20;html=1;" vertex="1" parent="1">
+          <mxGeometry x="32" y="440" width="936" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="build" value="&lt;b&gt;① 构建候选索引&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot; color=&quot;#526175&quot;&gt;写入独立的候选版本&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="detail">
+          <mxGeometry x="24" y="72" width="240" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="validate" value="&lt;b&gt;② 校验候选版本&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot; color=&quot;#526175&quot;&gt;检查候选数据完整性&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="detail">
+          <mxGeometry x="348" y="72" width="240" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="activate" value="&lt;b&gt;③ 切换活动版本&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot; color=&quot;#526175&quot;&gt;活动版本指针改指候选版本&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EAF5F3;strokeColor=#147D78;strokeWidth=1.5;fontFamily=Helvetica;fontSize=18;fontColor=#243247;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="detail">
+          <mxGeometry x="672" y="72" width="240" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="keep-current" value="&lt;b&gt;保留当前版本&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 14px;&quot; color=&quot;#A56320&quot;&gt;当前版本与活动版本指针均不变&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FBF2E5;strokeColor=#A56320;strokeWidth=1.5;fontFamily=Helvetica;fontSize=17;fontColor=#A56320;align=center;verticalAlign=middle;spacing=6;spacingLeft=10;spacingRight=10;" vertex="1" parent="detail">
+          <mxGeometry x="348" y="196" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="build-validate" value="构建完成" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="detail" source="build" target="validate">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="validate-activate" value="通过" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#147D78;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#147D78;labelBackgroundColor=none;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="detail" source="validate" target="activate">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="validate-keep" value="未通过" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#66788A;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="detail" source="validate" target="keep-current">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="34" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="expand-link" value="展开" style="edgeStyle=none;rounded=0;html=1;endArrow=none;dashed=1;dashPattern=6 4;strokeColor=#9AAABA;strokeWidth=1.5;fontFamily=Helvetica;fontSize=15;fontColor=#526175;labelBackgroundColor=none;exitX=0.5;exitY=1;entryX=0.3675;entryY=0;" edge="1" parent="1" source="publisher" target="detail">
+          <mxGeometry relative="1" as="geometry" x="0.4">
+            <mxPoint x="26" y="0" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

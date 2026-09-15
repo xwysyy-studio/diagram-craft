@@ -1,0 +1,4 @@
+interface:
+  display_name: "Drawio Craft"
+  short_description: "Clear, editable technical figures with deliberate visual design"
+  default_prompt: "Use $drawio-craft to turn this technical content into a clear, visually organized, editable draw.io figure."
