@@ -1,4 +1,4 @@
 interface:
-  display_name: "Drawio Craft"
-  short_description: "Clear, editable technical figures with deliberate visual design"
-  default_prompt: "Use $drawio-craft to turn this technical content into a clear, visually organized, editable draw.io figure."
+  display_name: "清新论文绘图"
+  short_description: "用清新配色、合理布局和图形表达指导论文配图、流程图与架构图"
+  default_prompt: "使用 $diagram-craft，理解给定内容，参考样图设计清新、精致且关系清楚的论文配图。"

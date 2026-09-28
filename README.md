@@ -1,153 +1,72 @@
-# Drawio Craft
+# diagram-craft
 
-把技术方案画成解释清楚、组织合理、视觉美观的原生 draw.io 图。
+diagram-craft 指导模型绘制论文配图、架构图、流程图和方案示意图，目标是让内容清楚、画面好看，具有精心制作的 PPT 配图质感。设计判断适用于 draw.io、PPT 和图像生成，目前实际制作与检查主要覆盖 draw.io。
 
-适合放在技术文档开头的方案图、机制说明、架构图、流程图和方案对比。图本身承担主要解释，帮助读者理解关键部分及其关系；保留后续在 draw.io 中修改文字、节点和连线的能力。
+[技能入口](SKILL.md) · [参考图](references/examples.md) · [draw.io 制作要点](references/drawio.md)
 
-可用于 Codex 和 Claude Code。核心工作流不依赖生图、浏览器自动化、MCP 或在线渲染服务；Python 标准库脚本提供可选的源文件检查。
+![FrontierSmith 方法总览](examples/frontiersmith-claude/frontiersmith-pipeline.png)
 
-字体沿用 draw.io 默认设置，不额外指定字体家族或下载字体；字号、粗细和间距按阅读需要调整。
+[打开可编辑示例](examples/frontiersmith-claude/frontiersmith-pipeline.drawio)
 
-![订单履约：支付、超时与异步补偿](assets/order-fulfillment.png)
+## 整套指导怎样工作
 
-[编辑复杂示例](assets/order-fulfillment.drawio) · [查看 SVG](assets/order-fulfillment.svg) · [完整方案说明](assets/order-fulfillment.md)
+图的用途决定信息取舍，内容关系决定呈现形式和空间，文字、图标、填色、边界与间距共同形成视觉层次。参考图为这些选择提供具体解法；实际成图则检验选择是否成立，并允许返回前面的环节重新安排。
 
-这个虚构方案包含同步下单、支付与超时竞争、库存补偿、Outbox 消息发布、重复消息、局部失败重试、迟到支付退款和人工处理，用于展示多条关联路径的组织方式。它不代表真实公司的实现或性能结论。
-
-复杂示例按约 1200 像素的文档全宽设计；仓库页面会缩小预览，点击图片可查看原尺寸，也可以打开 SVG 或 `.drawio` 检查局部。
-
-## 它如何画图
-
-- **先组织解释。** 根据材料识别实体、动作、关系和关键条件，再决定用流程、分组、对比或局部展开来表达。
-- **按阅读尺寸设计。** 字号、节点尺寸和画布一起安排，避免缩进文档后变成一堆小字。没有指定尺寸时，以约 1000 像素的文档显示宽度作为设计参考。
-- **同时规划节点与连线。** 用共享行列、分区和预留走线空间组织画面，复杂回路按需要明确指定路径。
-- **使用克制的视觉规则。** 中性色为主，强调色对应重点，兼顾中文标签、文字层级和有用途的留白。
-- **保留信息与编辑能力。** 不按固定节点数裁剪，不为美化改变关系；局部修改尽量保留无关内容和人工调整。
-
-可以输入一段说明、一份设计文档或已有 `.drawio`。信息不足且影响含义时才询问，不要求每次画图先完成一套问卷。已有配色或版式要求优先于默认样式。
-
-## 安装
-
-这是独立的 skill 仓库，不需要合并进已有的个人技能库。可以只在工作项目中启用。
-
-### 只对指定项目启用
-
-先把本仓库保存在一个固定位置。以下示例使用专门的工作技能目录：
-
-```bash
-mkdir -p "$HOME/.local/share/work-skills"
-git clone https://github.com/xwysyy-studio/drawio-craft.git \
-  "$HOME/.local/share/work-skills/drawio-craft"
-```
-
-在需要画图的项目根目录执行，按使用的 CLI 选择对应命令。目标位置如果已有同名 skill，先检查，不要强制覆盖。
-
-**Codex：**
-
-```bash
-mkdir -p .agents/skills
-ln -s "$HOME/.local/share/work-skills/drawio-craft" .agents/skills/drawio-craft
-```
-
-**Claude Code：**
-
-```bash
-mkdir -p .claude/skills
-ln -s "$HOME/.local/share/work-skills/drawio-craft" .claude/skills/drawio-craft
-```
-
-两个 CLI 都使用时，可以建立两个入口，指向同一份源文件。这样不修改全局配置，也不把 skill 安装到全局发现目录。以上是本机链接；需要团队共享时，把完整 skill 目录放进项目对应位置，不提交指向个人电脑路径的链接。
-
-也可以从 GitHub 的 **Code → Download ZIP** 下载，解压后将包含 `SKILL.md` 的完整目录复制到项目的 `.agents/skills/drawio-craft/` 或 `.claude/skills/drawio-craft/`。
-
-安装位置和符号链接支持见 [Codex 官方说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)和 [Claude Code 官方说明](https://code.claude.com/docs/en/skills#where-skills-live)。公司管理策略可能限制自定义 skill，应遵守工作环境的规则。
-
-### 调用
-
-Codex：
-
-```text
-$drawio-craft 根据 docs/design.md 画一张方案示意图。
-让读者主要看图就能理解关键机制，输出到 docs/figures/design.drawio。
-```
-
-Claude Code：
-
-```text
-/drawio-craft 根据 docs/design.md 画一张方案示意图。
-让读者主要看图就能理解关键机制，输出到 docs/figures/design.drawio。
-```
-
-也可以明确给出用途或修改范围：
-
-```text
-美化这张 existing.drawio，保留全部模块、条件和连接关系。
-重点调整过小的文字、拥挤的标签和交叉连线，使用浅色技术文档风格。
-```
-
-自然语言匹配也可以触发 skill；若没有出现，检查安装目录及 CLI 的技能列表，必要时开启新会话。普通网页对话可以读取 `SKILL.md` 及相关参考文件，但没有本地工具时无法自动运行校验或导出。
-
-## 环境与交付
-
-| 能力 | 用途 | 是否必需 |
+| 环节 | 要解决的问题 | 与其他环节的关系 |
 | --- | --- | --- |
-| 能读取说明并生成文件的模型 | 生成原生 `.drawio` | 核心能力 |
-| Python 3.9+ | 检查、完整内容清单、解压原生页面 | 可选，无第三方 Python 依赖 |
-| draw.io Desktop 或获准使用的编辑器 | 打开、编辑、导出 PNG / SVG / PDF | 查看或导出时需要 |
-| 渲染结果与模型看图能力 | 检查实际排版、连线和缩放可读性 | 可选增强 |
+| 图意与信息精度 | 读者需要理解什么，各项信息讲到什么程度 | 决定进入画面的对象、关系、条件和细节 |
+| 图形表达与空间 | 用什么形式表现这些内容，各部分占多少面积 | 文字、图标、容器与阅读顺序一起安排 |
+| 视觉层次 | 哪些对象应突出，哪些用于分组或辅助阅读 | 颜色、文字、边界、图标与留白共同配合 |
+| 参考与实现 | 相似问题有哪些可用解法，如何在所选工具中落实 | 参考图提供有条件的设计经验，原生对象保留可编辑性 |
+| 成图复核 | 内容是否准确，实际尺寸下是否清楚、协调、好看 | 可以调整信息详略、分区和整套样式，而不只修复溢出 |
 
-主要交付物始终是 `.drawio`。导出图片后保留源文件；缺少渲染能力时如实说明未做画面验收。不得为了通过检查擅自上传公司文档、更换服务或安装工具。
+具体绘图要求统一维护在 `SKILL.md` 及其引用的材料中。模块数、阅读方向、色彩组合和图形形式随内容决定。信息较多时，公式、代码、实例和关系本身可以成为图的主体；其阅读层次与用途共同决定应保留多少内容。
 
-## 本地检查工具
+## 安装与使用
 
-在本仓库目录执行：
-
-```bash
-python3 scripts/drawio.py check assets/mechanism.drawio --display-width 1000
-python3 scripts/drawio.py inspect assets/mechanism.drawio
-python3 scripts/drawio.py unpack compressed.drawio readable.drawio
-```
-
-- `check`：检查 XML、页面内 ID、父子关系、端点引用、数值和几何结构；提示可能的重叠、文字容纳问题、缩放后小字，以及明确指定的正交路径穿过节点的问题。`--json` 输出完整 JSON。
-- `inspect`：输出各页完整的节点文字、分组和关系，不裁成 top-N。
-- `unpack`：把压缩页面展开为可读 XML，保留全部页面和对象包装，不改输入文件，并拒绝覆盖已有目标。
-
-支持原生 `mxfile`、单独的 `mxGraphModel`、多页及压缩页面。检查工具不解码图片中嵌入的图源；这类文件请先用 draw.io 保存为 `.drawio`。
-
-**检查结果的边界：** 结构错误使命令返回非零状态；几何和文字警告需要结合实际图判断。脚本不重现 draw.io 的自动路由，也不测量真实字体，结构通过不表示图已美观或逻辑已正确。`--display-width` 使用内容范围与导出边距估计缩放，最终以实际插入文档后的画面为准。
-
-## 更多原生示例
-
-示例均为虚构的技术说明，展示布局方法，不代表真实系统实现或性能结论。
-
-### 系统视图与局部机制
-
-![版本化索引发布示例](assets/mechanism.png)
-
-[可编辑源文件](assets/mechanism.drawio) · [SVG](assets/mechanism.svg)
-
-### 主流程、判断与修正回路
-
-![配置发布流程](assets/flow.png)
-
-[可编辑源文件](assets/flow.drawio) · [SVG](assets/flow.svg)
-
-### 在相同条件下比较方案
-
-![同步重建与版本切换对比](assets/comparison.png)
-
-[可编辑源文件](assets/comparison.drawio) · [SVG](assets/comparison.svg)
-
-## 维护与验证
-
-`SKILL.md` 是运行入口，`references/` 保存按需读取的方法，`assets/` 保存原生示例及预览，`scripts/` 提供标准库工具。维护检查：
+克隆完整仓库，保留参考图片及其相对路径：
 
 ```bash
-python3 -m unittest discover -s tests -v
+git clone https://github.com/xwysyy-studio/diagram-craft.git
 ```
 
-涉及画面或生成行为的修改还应使用真实任务和原生 draw.io 渲染检查。CLI 测试不会证明模型每次都能画好；示例效果也不代表所有模型、字体和编辑器环境都得到相同结果。
+可以让能访问该目录的模型直接读取 `diagram-craft/SKILL.md`。需要作为本地 skill 启用时，将完整仓库目录放入所用工具支持的技能目录，并使用 `diagram-craft` 作为技能名。
 
-## 来源与许可
+### 文件
 
-参考项目与采用范围见 [SOURCES.md](SOURCES.md)。本仓库使用 [MIT License](LICENSE)，可以单独下载、使用和修改。
+| 文件 | 用途 |
+| --- | --- |
+| [SKILL.md](SKILL.md) | 当前审美与设计指导，连接内容选择、构图、视觉关系和复核 |
+| [参考图说明](references/examples.md) | 参考图的来源、评价范围及可观察做法，配套 20 张图片 |
+| [draw.io 制作要点](references/drawio.md) | 原生容器、绑定连接、嵌入素材、字号线宽与导出检查 |
+
+向执行模型提供完整 `diagram-craft/` 目录，保留相对路径和图片，再提供任务的原始材料、图的用途、读者、输出格式和已知展示尺寸。例如：
+
+> 请读取 diagram-craft/SKILL.md，并按其中要求实际查看相关参考图片。根据所附材料，画一张解释该方法核心机制的 draw.io 图。交付原生可编辑文件和从该文件导出的预览，并在实际使用尺寸下检查。
+
+图像生成需要实际接收选定的参考图、具体构图、准确标签、关系方向和风格要求。PPT 使用可编辑形状、组合与连接符。制作方式与素材处理见技能中的对应入口。
+
+## 当前示例与评价范围
+
+| 示例 | 内容与有用的观察 | 评价范围 |
+| --- | --- | --- |
+| [FrontierSmith，Claude 版](examples/frontiersmith-claude/frontiersmith-pipeline.png) | 实例对照、成对判断矩阵、执行得分矩阵与回流 | 最新浅白底版本获认可，用户明确更喜欢这一版 |
+| [FrontierSmith，GPT-6 版](examples/frontiersmith-gpt6/frontiersmith-pipeline.png) | 同一输入下的另一种组织方式 | 最新浅白底版本保留作比较；偏好反馈指向上面的 Claude 版 |
+| [Mem0](examples/mem0/mem0-architecture.png) | 对话、事实提取、相似记忆检索、更新操作和独立异步摘要 | 用户认可布局与内容，随后调整了边框与圆角；历史图仍含纯白卡片和实心编号 |
+| [AetherCode](examples/aethercode/aethercode-pipeline.png) | 题目整理、两路测试构建、测试集合并与质量评估 | 保留按反馈修改布局、边框和颜色分布后的版本；尚未套用后来的浅白内卡处理 |
+
+仓库为每个示例提供 `.drawio`、官方编辑器导出的 PNG、素材来源与许可。示例用于理解具体内容的组织方式，其局部样式仍按当前 skill 和新任务判断。参考图与素材的版权、许可归各自作者或项目。
+
+## 验证范围
+
+Mem0 与 FrontierSmith 的交付版由独立绘制的原稿加协调方修正得到。AetherCode 的交付版由另一个独立上下文在两张独立候选基础上重新构图，再按用户反馈修改。已有 draw.io 产物经过官方编辑器导出、图像查看和原生结构核对；这几项检查分别支持文件可用性、原生可编辑性和对实际画面的判断。
+
+FrontierSmith 两个消费者获得一致的文字、skill 和素材输入，之后浅底由协调方调整。因此，最终浅底图是用户反馈修正后的结果，最新颜色指导尚未通过新的独立绘制运行验证。单次跨模型结果也不足以证明普遍的模型优劣或某次 skill 修改的因果效果。PPT 与 ImageGen 的实际出图效果尚未在本项目验证。
+
+示例缩小后，部分次级说明仍需要放大阅读。用于论文或幻灯片时，应在实际版面检查；字体替换也可能改变换行。
+
+## 仓库结构与许可
+
+根目录的 `SKILL.md` 是技能入口，`references/` 保存制作指导与参考图，`agents/openai.yaml` 提供技能显示信息，`examples/` 保存原生示例、预览和素材来源。
+
+原创技能文档与原创示例内容沿用 [MIT License](LICENSE)。第三方参考图片、图标和品牌标志保留各自的版权、许可及商标归属，不由本仓库重新授予 MIT 许可；来源与适用范围见 [SOURCES.md](SOURCES.md)。

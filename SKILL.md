@@ -1,140 +1,121 @@
 ---
-name: drawio-craft
-description: >-
-  Create or edit native, editable draw.io diagrams that explain technical ideas,
-  system designs, mechanisms, and workflows through clear visual structure.
-  Use for .drawio files, technical explanatory figures, architecture diagrams,
-  flowcharts, and requests to improve diagram layout, connectors, typography,
-  or colors. Preserve a requested alternative format; statistical plots and
-  raster illustrations belong to their own tools.
+name: diagram-craft
+description: 为论文配图、流程图、架构图和方案示意图提供构图与审美指导。按内容安排空间、文字、图标、配色和连线，形成清新、精致、接近优质 PPT 配图的视觉质感；适用于图像生成、draw.io、PPT 等各种绘图方式。整套演示文稿排版与数据图表选型不属于本技能的主要用途。
 ---
 
-# Drawio Craft
+# Diagram craft
 
-Make the figure carry the explanation. A reader should understand the important
-parts, their relationships, and how the mechanism works from the diagram itself.
-Use the source material and intended reader to choose the necessary detail and
-visual structure. Translate relationships into the picture rather than assigning
-one box to every sentence.
+目标是一张像精心制作的 PPT 论文配图那样的图，既好看，也讲得清楚。读者第一眼看清它由哪几部分组成、按什么顺序读，再自然读到需要的细节；颜色、形状、文字、图标、间距和分组像一起设计过，画面干净、清新、有层次。用户用精致的精装房形容想要的质感，用刚建好的水泥毛坯房形容没有经过设计的土气。
 
-Deliver native editable `.drawio` XML. Work with local files and bundled resources;
-image generation, browser automation, network access, and a running server are not
-required. Python 3.9+ enables the optional standard-library preflight helper.
+清楚和正确是基础，但还不够。用户希望图读起来让人心情愉悦，喜欢多数论文配图用 PPT 做出的那种质感，不喜欢 AI 直接生成的图常见的油腻和过饱和。图标、角色、点色和留白带来的节奏与亲切感本身就是图的价值，不必每处都证明增加了信息，只要不挤掉必要内容、不打乱阅读顺序。默认采用清新、活泼的风格；BEST Figure 1 那种更克制、务实的风格同样可用，仍保持清新。用户当前指定的风格优先。
 
-## Read the relevant resources
+画一张图要作出几类相互影响的决定：这张图要讲什么，每项讲到什么精度；用什么组织方式、什么形式和多大面积呈现各项内容；文字、边界、颜色、图标和连线组成怎样一套轻重关系；实际成图是否达到上面的效果。下面各节按这个顺序展开，但文字、图形和面积要放在一起选，后面的判断可以修正前面的选择：试排典型对象时发现字需要更大的面积，就回头调整分区；看成图时发现某条信息对本图没有用，就删掉并重新安排周围的空间。制作方式可以是 draw.io、PPT 或图像生成，效果都以实际成图判断。
 
-Resolve `{skill_dir}` to the directory containing this `SKILL.md`, wherever it is
-installed. Resource paths below are relative to that directory.
+## 参考图
 
-| Resource | Read when |
+阅读[参考图说明](references/examples.md)，按当前内容和想要的风格实际打开几张图：至少一张内容关系相近，一张风格接近，并且来自不同来源，不只看“用户自己的参考”中 InteractBench 和 BEST 的图，避免成图只像某一张。用户评为好看的图，题材、布局和画风差别很大，给人的效果却相通。
+
+看每张图怎样处理和当前相似的问题：内容怎样分块，图形和文字怎样分工，颜色、字重、描边和留白怎样配成一套轻重关系，空间怎样留出阅读顺序。这些做法在各自的内容和整体风格里成立；布局、颜色、字体、描边粗细和模块数量随当前内容重新决定，不把几张图共有的外观拼成固定模板。参考图说明如实记录原图的配色和画法，其中有些做法与用户当前要求不同，例如深色实心标题条。遇到这类做法，按参考图说明中“原图做法与用户当前要求”一节处理：保留它们在信息组织上的作用，外观按本技能的要求。成图完成后，还要把相关参考图放在旁边比较，见最后一节。
+
+## 确定图要讲什么
+
+先读原始材料，用一句话确定读者看完应理解什么，例如一个机制、一组差异、一种归属或一个结果，再列出为此需要的对象、关系、条件、输入输出和关键细节，决定每项讲到什么精度。原文中真实存在、图里也放得下的内容，不因此就该进图。判断方法是问：换成更概括的说法，或者不写，读者会不会误解或少知道这张图要讲的东西？节点里的文字、箭头标签和图周围的说明都按这个问题判断。
+
+- 具体名称（方法、模型、数据集、平台）通常帮助辨认，可以保留。数值、版本、日期、参数这类精确信息，在读者需要它来理解本图时保留，例如它决定结论、交代规模，或本身就是示例内容（InteractBench Figure 1 题目条里的 n = 8, k = 3，Figure 2 的 322 Tasks）；只为照录完整而写的，留给正文或图注。例如某个步骤由一个模型完成时，写出模型名能帮助辨认，精确到快照日期的版本号通常不改变读者对流程的理解。
+- 读者常想知道一个步骤由人完成，还是由模型或程序完成。这个区别影响理解时，用人物图标、模型 logo 或标签把它画清楚（飞书参考图、InteractBench Figure 2）。
+- 比较对象、关键条件和机制中必要的步骤，不为简洁而泛化。进图的表述要准确，不把原文的条件或适用范围说大，也不把原文整段搬进图里。
+- 推动流程的箭头标签（例如 “Is the instance solved?”）和操作、判断条件属于内容，应当保留。默认不加整图大标题、副标题、口号和图周围的备注；这里的备注指过度解释或无关紧要的内容，区域名称、比较对象和问题条件按表达需要保留。用户指定的标题照要求安排。
+
+## 组织画面与空间
+
+### 按真实关系选择组织方式
+
+按内容中的主要关系选择组织方式，一张图可以组合几种：
+
+| 内容中的关系 | 常见做法 |
 | --- | --- |
-| [Design](references/design.md) | Creating a figure or substantially changing its presentation |
-| [Layouts](references/layouts.md) | Choosing a composition and planning coordinates and routes |
-| [XML](references/xml.md) | Authoring native cells, groups, labels, and connectors |
-| [Editing](references/editing.md) | Modifying an existing diagram, including compressed or multipage files |
-| [Rendering](references/rendering.md) | A local renderer is available or an image export is requested |
+| 先后、处理流程 | 沿一个方向排开主要阶段，输入在起点，结果在终点；需要展开的阶段获得更大面积，内部步骤在所属区域里排列。阅读方向清楚即可，不必总是从左到右（#101）。 |
+| 循环、交互与反馈 | 参与方分布在循环的几个位置，往返方向清楚；多轮交互按轮次对齐请求与响应。 |
+| 并列比较 | 对应的部分放在相同位置，让读者直接看到差异所在，并给差异处足够空间；两边的复杂度可以不同（#52）。 |
+| 归属与层级 | 真实的成员关系用分组底色、外框、容器或邻近表达；外层分组和内层对象用不同的视觉方式区分。 |
+| 多个并列类别或任务 | 同尺寸的卡片成行成列排列，卡片内部结构一致（#70）。 |
 
-The examples in `assets/` are editable, fictional technical figures. Read the
-closest example as a worked composition, not as a compulsory topology:
+内容由几个有真实分工的部分组成时，用户偏好框架式的模块图：用分组、嵌套、位置和对齐让读者看出谁属于哪里、哪些部分并列，只为需要明确说明的流转画线，不把全部关系画成连线交错的流程图。一块可以是面板、列、横带、虚线框，也可以只靠位置和标题聚在一起；块与块之间留白清楚，块内对象排列整齐，不必给每块另加名称。模块数量、嵌套层数和排布随内容决定，不固定成三栏、三段或某一种嵌套方式；各部分的内部画法也可以各不相同，例如 #136 三栏分别用媒体卡片、证据网格和推理链解释各自的阶段。分组框只用于真实的归属：一条清楚的流程可以直接用排成一行的对象和箭头表达，不必给每一步再套框；也不要用层层嵌套的面板承载全部内容。
 
-- `mechanism.drawio`: a system overview with an expanded publishing mechanism.
-- `flow.drawio`: a main path, a decision, and an explicit failure outcome.
-- `comparison.drawio`: two approaches compared on the same operation.
-- `order-fulfillment.drawio`: interacting payment, timeout, inventory, delivery,
-  and compensation paths. Read `assets/order-fulfillment.md` with this example
-  when checking how its conditions and state transitions are represented.
+### 每个对象怎样呈现
 
-## Understand what the figure must explain
+能画出来的对象画出来。参与者、数据和结果可以用图标、logo、照片、界面截图、代码片段、真实输出、数据格或对话气泡表示，配短名称，不写成一段说明；照片、截图、代码和真实输出这时就是数据本身。解释机制用的几何图形，例如数组格、矩阵、树、柱条、分组框和关系线，按内容用形状直接绘制。成段的文字只在它本身就是内容时出现，例如题面、代码、公式、示例 prompt 和对话，装在卡片或气泡里组织好阅读层次（BEST Figure 1、#104、#16）。
 
-Read the user-specified material, including conditions and qualifications needed
-to interpret it. Identify the entities, actions, directed relationships, grouping,
-and any mechanism the reader must follow. Distinguish a proposed design from
-observed behavior; do not invent metrics, guarantees, benefits, or components.
+同一区域里的对象按角色和内容选择呈现方式。参与者（人、模型、外部系统）可以是图标配名称，处理步骤可以是一组紧凑的组件，产物可以用文件、数据格、集合或结果表示；有的对象只需一个名称，有的需要一条条件说明。所有对象都做成同样的大卡片时，内容少的显得空，内容多的挤满说明。同一角色保持一致，不同角色可以采用不同形式，让画面有意义地变化；这种区分按内容判断，不是每张图都要套用的角色模板。
 
-Choose a reading structure that fits those relationships: a flow, a layered
-system, a comparison, an overview with a local expansion, or another suitable
-composition. These are options, not required panels.
+### 面积、字号与图标一起定
 
-For a long document, select information according to the requested figure's
-purpose while keeping the necessary causal and conditional links. Preserve
-information that changes the meaning. Group related detail, show a local
-expansion, or use linked panels before cutting content or shrinking text. There
-is no fixed node count, label character limit, or compulsory single-page limit.
-If a meaningful omission or split conflicts with the requested scope, ask.
+先确定各部分的面积和位置，同时拿一两个典型对象试出正文字号、图标大小和描边、填色的分量，再按这套分量展开到全图，安排内部对象、文字和连线通道。字号、图标和边距决定一块需要多大；拖到最后才定，就只能把字和线往排好的框里塞。重要或复杂的机制获得更多面积，同级内容保持相近的视觉分量。一边拥挤、一边空散时，先调整分区比例和对象位置。
 
-State the intended composition and output briefly, then proceed when the input is
-sufficient. Ask only about ambiguities that would change the explanation. Do not
-require an ASCII proposal, approval round, or separate specification file for
-every diagram. Preserve the user's terminology and language.
+信息多的图同样可以好看（#136、#70、BEST Figure 1），前提是阅读入口和各部分的归属清楚，同类内容的内部次序一致；信息确实多到放不下时，按完整的子问题分成几个视图，不靠缩小字号挤进一张图。删减或改写文字后重新排版，调整容器尺寸、图标与标签的位置和相邻间距。空白用于分组和呼吸，不用额外说明填满预设卡片，也不保留与内容脱节的大卡片。
 
-## Design at the size people will read
+## 一套协调的视觉关系
 
-Follow [design.md](references/design.md) and the selected section of
-[layouts.md](references/layouts.md). Establish the intended display width before
-laying out the diagram. In the absence of a specified placement, use about
-1000 CSS pixels wide as a working document preview and state that assumption.
-This is a design reference, not a guaranteed size in the user's document system.
+主体对象、分组、辅助信息和连线的主次，由面积、间距、字号字重、填色、描边的颜色与粗细、虚实共同决定，不需要每个维度都拉开差别。好看的图里这些选择成套出现：#104 用细的彩色描边、极浅填充和退后的浅灰连线，让公式节点成为主体；#48 的粗黑线稿、大号衬线字和黑色箭头同样厚重；BEST Figure 1 用细的同色描边、窄的彩色标题条和常规字重。把一套里的单项搬到另一套上，例如给轻细的字和图标配粗黑边框，不一定成立。同一角色复用同一套样式；看成图时发现某类对象发飘、过重或与文字、图标不相称，就整类一起调整，初选的组合也可以整体换掉。质感来自平涂色块、利落的边界、对齐和间距；框、线和图标上的阴影、渐变、立体和材质效果很少用或不用。
 
-Plan node sizes and connector corridors together. Compute shared row/column
-positions, group padding, and page bounds from the content. Avoid placing all
-nodes first and improvising edges afterward. Keep the main explanation visually
-continuous; place secondary branches where they can be followed without weaving
-through unrelated modules.
+### 边界与对齐
 
-Use readable labels, restrained color roles, and purposeful whitespace. For new
-figures, use draw.io's default font family without an explicit
-`fontFamily`, CSS `font-family`, or font-face override unless the user requests
-one. Adjust size, weight, and spacing for hierarchy; do not download fonts.
-When a label will not fit, change wrapping, box size, or composition before making
-the type smaller. Keep important conditions close to the element they qualify.
-When a mechanism depends on changing state, make that state visible where it
-clarifies the explanation. Place consequential outcomes next to their decision
-or action, with an explicit relationship when proximity alone is ambiguous.
-Group titles and local annotations can carry information without extra boxes or
-arrows; preserve a connector whenever its relation would otherwise be ambiguous.
+用户默认喜欢圆角的模块容器，圆角在实际展示尺寸下应清楚可见，与模块尺寸相称。
 
-## Author and check
+结构先靠区域填色、间距和位置建立，边框补足边界。按用户自己的画法，外层模块的边界相对内部更有分量，但颜色不很深；内部卡片和节点使用正常线宽，已有填色和位置足以表达归属时可以不描边；每层都加重会显得突兀。描边颜色与所在区域协调，可以选同色系稍深的颜色；外层的分量可以来自稍粗的线，也可以来自稍深的颜色，不必两者同时加重。用户认为边框太细太浅会显得单薄、缺少质感，也明确不要在浅色模块外围统一画一圈近黑或藏蓝的粗框。边界的轻重要和填色、字重、图标、间距一起判断，在展示尺寸下看它们是否相称。需要强调内部某个对象时，按用途选择位置、填色、文字或图标，不把整层内部框一起加重。
 
-Generate an uncompressed `<mxfile>` containing native vertices and edges using
-[xml.md](references/xml.md). Keep text editable and attach connectors to cells
-where practical. A single embedded image of the whole figure does not satisfy
-native editability. Preserve the `.drawio` source after any export.
+同级对象沿同一条线对齐，间距一致。图标和名称组成一个标签时，作为一组相对它所命名的区域或对象定位，不分别对齐各自的坐标。标题居中还是靠左随版式和层级选择，例如 #139 通栏标题居中、子框标题靠左，BEST Figure 1 的卡片标题像文档组件一样靠左。
 
-Save to the user's requested location or the project's existing diagram folder.
-If neither exists, use a topic-relevant filename in the working directory and
-state it. Do not change application settings, install dependencies, create a
-new repository, or upload project material as a side effect of drawing.
+### 文字
 
-When Python is available, run:
+同一角色的文字使用同一字号和字重，例如区域标题一级、对象名称一级、说明与标签一级。容器按这套字号安排大小，不因为某个框窄就单独缩小其中的字；放不下时先精简表述、换行、调整分区比例或对象位置。主要标签在最终展示尺寸下接近正文字号，正常阅读尺寸下清楚可读。节点名写在节点内或紧挨节点，操作和判断条件贴在对应箭头旁，公式与结果放在所属区域。字体按整体风格协调选择，无衬线、衬线或手写风格都可以，同一角色使用同一种字体；代码、公式等内容可以使用适合各自角色的字体或排版。
 
-```bash
-python3 "{skill_dir}/scripts/drawio.py" check figure.drawio --display-width 1000
-```
+### 颜色
 
-Use the chosen display width rather than mechanically copying `1000`.
-Fix structural errors. Review each warning against the actual figure: text-fit,
-overlap, and route estimates are not proof of a rendering defect. The helper
-understands groups, page-local IDs, compressed pages, and explicitly routed
-polylines; it does not reproduce draw.io's automatic routing or font rendering.
-Do not delete relationships, shrink fonts, or exempt real defects merely to
-obtain a clean report. If Python is absent, check the source and state that the
-script was not run rather than claiming an equivalent automated check.
+配色要像整体设计过的一套颜色，第一印象干净、清新、不土。颜色好不好看取决于整套组合、各色的面积和所在位置，也要和空间、形状一起看，不能只凭“低饱和”或某个色值判断。
 
-When a renderer is available, follow [rendering.md](references/rendering.md).
-If image inspection is available, inspect the actual draw.io output at the
-intended display size. Check the reading order, labels, routes, balance, and
-faithfulness to the source. Correct observed defects and inspect the changed
-result. Do not start browser services or switch to an external renderer just to
-satisfy a checklist; any external processing must respect the user's data policy.
+用户明确不用近黑、藏蓝一类的深色实心底块，也不用深底白字，即使某张获好评的参考图这样做。标题条、编号圆点、胶囊标签、卡片和结果块都用浅色底配清楚的深色文字，各层浅色的深浅按下面"层次"一条安排。这条针对底块，深色文字、必要的深色线条和真实 logo 的原有颜色不受影响。区分层级靠空间、字号字重、浅色的深浅和边界共同完成，文字与必要线条保持足够对比度。
 
-## Deliver a useful figure
+- **浅而有分量**：主要色块的填色本身能看清色相。用户自己图里的浅色比近白的淡彩实一些；整张图只由近白的浅粉、浅紫、浅绿互相搭配，用户认为很土，像 AI 生成的。主要区域显得发虚时调整填色本身，不只靠更鲜艳的标题条和描边补偿。白色、近白色可以用于画布和区域之间的留白；像 BEST Figure 1 那样主要靠窄色条组织信息的设计，也可以大面积留白。浅色并不意味着越接近白色越好。
+- **层次**：先确定主区域、内部对象和强调位置，再分配同一色系的深浅。承载内容的内部卡片默认用浅白底：接近白色、略带所属区域的色相，像白色覆盖层轻微透出背景。内外应有清楚而柔和的明度差：卡片仍显得浅白、独立，不因混入太多背景色而融进外层，也不呈现突兀的纯白反差。可用半透明填充或等效的混合色，按实际背景、叠放关系和整图观感选择，不固定透明度；透明感作用于底色，文字、图标和必要边界保持清楚。步骤块、实体或需要强调的对象，按其在整图层次中的角色可以用更实一级的同色填充。填色、描边和文字不必同时加重，边框按上面的内外关系安排，配合间距区分层次。
+- **多色相组合**：几种浅色可以组合着用，让整张图有变化；用户觉得全是一个颜色看起来难受，同色系的颜色也不必都放在一起。先为全图选协调的组合，再分配给需要区分的阶段、类别、角色或对比双方（#29、#139、#70、#104、#52、InteractBench Figure 1）。相关区域共享色系，内部标签和图标沿用所属色系或中性色，通过与失败等状态色保持语义一致。不同名称的区块不必各占一个色相，也不按固定色数凑色或照搬某张参考图的配色。
+- **全图的分布与对应**：标题条、底色、图标、分类标签和结果标记放在一起看，避免局部各自合理，合起来却五花八门、花里胡哨。再看每种颜色落在画面的哪些位置，颜色的面积与视觉重心是否服务于阅读顺序。分布均衡不要求各色面积相等，有意的局部强调可以不对称；没有内容依据的孤立色块或一侧过重则需要调整。内容上确实对应的对象可以复用同一种颜色，例如框住整条流程的起点和终点、在两处出现的同一实体、不同模块里的同一角色，这样既平衡了颜色分布，也告诉读者它们相关。对应关系来自内容，不能据此把所有输入和输出都涂成同一种颜色。
+- **强调**：鲜明的颜色用于少量需要识别或强调的位置，例如本文方法、关键结果、通过与失败的标记，不铺满画面。
 
-Give the `.drawio` path and any requested exports. Briefly identify what the figure
-explains, relevant assumptions or omissions, and the checks actually performed.
-Distinguish source validation, renderer import/export, and visual inspection.
-Without a renderer or image-reading capability, deliver the source with that
-specific limitation. Never present a heuristic check as visual approval.
+需要避开的整体效果：用户说的“土”是整套颜色给人的感觉，像刚建好、没有装修的水泥毛坯房；评分为 -1 的 #113、#97 整套颜色发灰、发闷，可作对照。饱和色块、渐变和发光铺满画面时显得油腻、刺眼。以蓝紫色为主调的配色，用户认为 AI 味太重。除了上面明确不用的深色实心底块，这些说的都是整张图的观感，并不禁用某个色相。上色后把成图和参考图并排比较第一印象，再调整整套搭配、颜色面积和强调位置。
 
-When revising, read the latest file and preserve unrelated labels, relationships,
-pages, and manual adjustments. Follow [editing.md](references/editing.md) rather
-than regenerating the entire diagram for a local change.
+### 图标、logo 与图像素材
+
+用现成的图标库和真实 logo 让对象容易辨认，不临时用基本形状拼画图标；解释机制的几何图形按上文直接用形状绘制。图标帮助辨认，也带来亲切感，不必每个节点都配。一张图里的图标尽量来自同一套、画法一致；缺少合适的图标时先换关键词，再找画法协调的其他库。涉及具体产品、模型或平台时使用其真实 logo，保留辨识特征。
+
+同类图标保持一致的视觉大小，与同级文字、内边距和容器比例一起安排；按图标实际轮廓校正，素材自带的留白不同可能需要少量调整。保存素材的来源和许可。成图中的素材使用目标格式支持的内嵌方式，或随成图一起保存的本地文件，保证再次打开时不依赖在线接口。
+
+活泼风格可以使用可爱的角色、吉祥物或贴纸式图标，克制风格使用线稿图标和更简洁的边界；手写字体等个性做法同样按内容和风格选择。照片、渲染的物体或插画本身表达内容时，可以占据画面的主要位置，例如 #139 用照片和渲染的茶壶、机械臂表现操作过程。只为装饰加入的材质、光效和插画场景不要抢占画面。
+
+### 连线
+
+先用位置、分组和对齐表达归属与并列，只为需要明确说明的输入输出、调用、依赖、交互或反馈画线，并在排版时预留线的通道。连线少而顺：线短，主路径容易追踪，方向一致并沿阅读顺序前进，分支从明确的位置分开，反馈和循环尽量从流程外侧绕回，标签贴着所属的线。箭头方向与材料一致。
+
+两端对象能对齐时让线直接连通，不为走线加没有必要的折角。遇到交叉或长距离绕行，先移动对象、调整分组或阅读方向，再处理线的转折。线从对象边缘进出，避开文字、图标和其他节点；多条线不要挤在同一个端点。不同线型或颜色只区分确实不同的关系，例如用虚线表示反馈或可选步骤，并在整张图中保持一致。
+
+## 按制作方式实现
+
+- **draw.io**：阅读 [draw.io 制作要点](references/drawio.md)，用原生对象、容器和连接线实现上述设计，交付的文件保持原生可编辑。
+- **PPT**：用普通形状、组合和连接符绘制，同角色对象套用同一格式，文字和形状保持可编辑。
+- **图像生成或其他执行器**：把确定的构图、对象、准确标签、关系方向、配色与图形风格，以及选定的参考图片一并传入；只给技能名称、本地路径或“清新好看”这类形容，执行器无法照做。生成的图常见文字错误、logo 走样和油腻的颜色，检查时逐项核对。
+
+## 看完整成图，再修改
+
+渲染出完整图片，缩放到论文、文档或幻灯片中的实际展示尺寸查看，并把两三张相关参考图放在旁边，比较它们怎样处理相似的问题和整体观感，不追求外观相像。先判断整体，再检查局部：
+
+- 第一眼能否看出主要部分、分组和阅读顺序？视线若先被标题、装饰或大片重色吸引，重新分配视觉分量。
+- 内容是否准确、精度合适？关键事实、方向、条件和技术关系都在，没有把条件或范围说大；放得下、也没写错的文字，同样看它对本图是否有用。检查错字、错误 logo、箭头误接、遮挡与裁切。
+- 空间是否适合内容？对象的呈现方式和面积与实际内容相称，没有一边空散、一边挤满说明，也没有删字后留下的空壳。正常尺寸下文字清楚、不密密麻麻；字挤成一片时，先删去重复和无关的说明、把能画的内容改成图形，或拆分视图，关键技术内容不因留白而删掉。
+- 文字、图标、边界、填色和留白是否像一起设计过？并排比较同级文字与同类图标的大小、内边距和容器比例；看圆角模块是否舒展，边框是否与区域颜色协调、清楚而不抢眼、也不单薄，内部边界是否退后，同级对象和标签组是否对齐。某类对象显得单薄或过重、某组元素摆得别扭时，调整这一类的整套样式或这一组的位置。
+- 颜色的第一印象是否干净、清新？主要浅色块是否有分量，内部浅底是否与所属区域自然衔接，相关模块是否协调，局部标签与图标是否引入了过多抢眼的颜色，颜色在全图的分布是否均衡，有没有深色实心底块？显得发虚、发灰、花哨或油腻时，调整整套搭配与颜色面积，不只改某一处。
+- 沿主流程或比较关系读一遍，能否顺利找到下一步和关键差异？需要在图中找线时，调整结构和走线。
+- 整体是否像一张完成度高的普通论文配图？某张参考图的个性做法在成图里格外抢眼时，减弱它。
+
+没有溢出、没有错误，不等于选得好。初稿里看似合理的选择，例如分区方式、配色组合、整套轻重或某类文字的详略，看过成图后同样可以推翻。某个主要选择仍拿不准或看着别扭时，可以做一个整体协调的替代版本，在同一展示尺寸下与当前版本并排比较，留下更好的一个，也可以是原方案。不需要每张图、每个属性都出候选，也不需要为每项选择写理由；判断的依据是成图本身。
+
+先修结构和信息安排，再统一颜色、图标、边框、间距与对齐。每次实质调整后重新看整图，确认局部修改没有破坏整体关系。无法渲染或查看成图时，在交回中说明视觉检查没有完成。
